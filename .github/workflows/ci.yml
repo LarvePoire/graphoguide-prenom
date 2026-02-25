@@ -1,76 +1,41 @@
-name: CI
+name: Docker publish
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: ['main', 'development', 'origin/renovate/*']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  ci:
-    name: Lint, Typecheck & Test
+  build-and-push-image:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: ai_claude
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: ai_claude_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          node-version: "24"
-          cache: "npm"
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Generate .env for CI
-        run: |
-          APP_KEY=$(node -e "const c=require('crypto');console.log('v1.'+c.randomBytes(32).toString('base64url'))")
-          cat > .env <<EOF
-          TZ=UTC
-          PORT=3333
-          HOST=localhost
-          APP_URL=http://localhost:3333
-          LOG_LEVEL=info
-          NODE_ENV=test
-          SESSION_DRIVER=cookie
-          APP_KEY=${APP_KEY}
-          DB_HOST=localhost
-          DB_PORT=5432
-          DB_USER=ai_claude
-          DB_PASSWORD=password
-          DB_DATABASE=ai_claude_test
-          EOF
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Build
-        run: npm run build
-
-      - name: Run migrations
-        run: node ace migration:run --force
-        working-directory: build
-
-      - name: Tests
-        run: node ace test
-        working-directory: build
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
