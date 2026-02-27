@@ -32,6 +32,13 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  redis:
+    container_name: ai_claude_redis
+    image: redis:latest
+    restart: always
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+
 volumes:
   postgres_data:
   pgadmin_data:

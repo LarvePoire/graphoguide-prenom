@@ -11,7 +11,12 @@ export default class SessionController {
     const user = await User.verifyCredentials(email, password)
 
     await auth.use('web').login(user)
-    response.redirect().toRoute('home')
+    await user.load('role')
+
+    if (user.isAdmin) {
+      return response.redirect().toRoute('admin.dashboard')
+    }
+    return response.redirect().toRoute('dashboard')
   }
 
   async destroy({ auth, response }: HttpContext) {

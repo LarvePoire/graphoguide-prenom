@@ -1,4 +1,5 @@
 import { Form } from '@adonisjs/inertia/react'
+import { Link } from '@inertiajs/react'
 
 export default function Login() {
   return (
@@ -39,6 +40,10 @@ export default function Login() {
                 <button type="submit" className="button">
                   Login
                 </button>
+              </div>
+
+              <div>
+                <Link href="/forgot-password">Forgot password?</Link>
               </div>
             </>
           )}

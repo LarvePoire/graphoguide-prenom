@@ -12,4 +12,16 @@ export interface ApiDefinition {
     store: typeof routes['session.store']
     destroy: typeof routes['session.destroy']
   }
+  passwordReset: {
+    create: typeof routes['passwordReset.create']
+    store: typeof routes['passwordReset.store']
+    verify: typeof routes['passwordReset.verify']
+    check: typeof routes['passwordReset.check']
+    resetForm: typeof routes['passwordReset.resetForm']
+    reset: typeof routes['passwordReset.reset']
+  }
+  dashboard: typeof routes['dashboard']
+  admin: {
+    dashboard: typeof routes['admin.dashboard']
+  }
 }

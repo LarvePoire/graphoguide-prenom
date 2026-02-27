@@ -7,8 +7,34 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class PasswordResetTokenSchema extends BaseModel {
+  static $columns = ['id', 'email', 'token', 'expiresAt', 'createdAt'] as const
+  $columns = PasswordResetTokenSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare email: string
+  @column()
+  declare token: string
+  @column.dateTime()
+  declare expiresAt: DateTime
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+}
+
+export class RoleSchema extends BaseModel {
+  static $columns = ['id', 'name', 'createdAt'] as const
+  $columns = RoleSchema.$columns
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
-  static $columns = ['id', 'fullName', 'email', 'password', 'createdAt', 'updatedAt'] as const
+  static $columns = ['id', 'fullName', 'email', 'password', 'roleId', 'createdAt', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column({ isPrimary: true })
   declare id: number
@@ -18,6 +44,8 @@ export class UserSchema extends BaseModel {
   declare email: string
   @column({ serializeAs: null })
   declare password: string
+  @column()
+  declare roleId: number | null
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
   @column.dateTime({ autoCreate: true, autoUpdate: true })

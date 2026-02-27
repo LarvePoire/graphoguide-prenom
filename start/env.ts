@@ -24,7 +24,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Variables for configuring session package
   |----------------------------------------------------------
   */
-  SESSION_DRIVER: Env.schema.enum(['cookie', 'memory', 'database'] as const),
+  SESSION_DRIVER: Env.schema.enum(['cookie', 'memory', 'database', 'redis'] as const),
 
   /*
   |----------------------------------------------------------
@@ -36,4 +36,33 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.secret(),
   DB_DATABASE: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring redis connection
+  |----------------------------------------------------------
+  */
+  REDIS_HOST: Env.schema.string({ format: 'host' }),
+  REDIS_PORT: Env.schema.number(),
+  REDIS_PASSWORD: Env.schema.secret(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring SMTP mail transport
+  |----------------------------------------------------------
+  */
+  SMTP_HOST: Env.schema.string({ format: 'host' }),
+  SMTP_PORT: Env.schema.number(),
+  SMTP_USERNAME: Env.schema.string(),
+  SMTP_PASSWORD: Env.schema.secret(),
+  MAIL_FROM_ADDRESS: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for seeding the default admin account
+  |----------------------------------------------------------
+  */
+  ADMIN_EMAIL: Env.schema.string.optional(),
+  ADMIN_PASSWORD: Env.schema.string.optional(),
+  ADMIN_FULL_NAME: Env.schema.string.optional(),
 })
