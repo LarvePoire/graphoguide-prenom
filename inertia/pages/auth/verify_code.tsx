@@ -1,11 +1,8 @@
 import { Form } from '@adonisjs/inertia/react'
 import { Field } from '@ark-ui/react/field'
 import { PinInput } from '@ark-ui/react/pin-input'
-import { usePage } from '@inertiajs/react'
 
 export default function VerifyCode({ email }: { email: string }) {
-  const { flash } = usePage<{ flash: { error?: string } }>().props
-
   return (
     <div className="form-container">
       <div>
@@ -14,8 +11,6 @@ export default function VerifyCode({ email }: { email: string }) {
           We sent a 5-digit code to <strong>{email}</strong>. It expires in 15 minutes.
         </p>
       </div>
-
-      {flash?.error && <div>{flash.error}</div>}
 
       <div>
         <Form route="passwordReset.check">

@@ -1,17 +1,25 @@
 import { Data } from '@generated/data'
-import { toast, Toaster } from 'sonner'
+import { Portal } from '@ark-ui/react/portal'
+import { Toast, Toaster } from '@ark-ui/react/toast'
 import { usePage } from '@inertiajs/react'
+import { XIcon } from 'lucide-react'
 import { ReactElement, useEffect } from 'react'
 import { Form, Link } from '@adonisjs/inertia/react'
+import { toaster } from '~/lib/toaster'
 
 export default function Layout({ children }: { children: ReactElement<Data.SharedProps> }) {
-  useEffect(() => {
-    toast.dismiss()
-  }, [usePage().url])
+  const url = usePage().url
+  const { flash } = children.props
 
-  if (children.props.flash.error) {
-    toast.error(children.props.flash.error)
-  }
+  useEffect(() => {
+    toaster.dismiss()
+  }, [url])
+
+  useEffect(() => {
+    if (flash.error) {
+      toaster.create({ title: flash.error, type: 'error' })
+    }
+  }, [flash.error])
 
   return (
     <>
@@ -53,7 +61,18 @@ export default function Layout({ children }: { children: ReactElement<Data.Share
         </div>
       </header>
       <main>{children}</main>
-      <Toaster position="top-center" richColors />
+      <Portal>
+        <Toaster toaster={toaster}>
+          {(toast) => (
+            <Toast.Root key={toast.id}>
+              <Toast.Title>{toast.title}</Toast.Title>
+              <Toast.CloseTrigger>
+                <XIcon />
+              </Toast.CloseTrigger>
+            </Toast.Root>
+          )}
+        </Toaster>
+      </Portal>
     </>
   )
 }
