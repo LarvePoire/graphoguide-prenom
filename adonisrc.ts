@@ -61,6 +61,10 @@ export default defineConfig({
     () => import('@adonisjs/redis/redis_provider'),
     () => import('@adonisjs/mail/mail_provider'),
     () => import('#providers/api_provider'),
+    {
+      file: () => import('#providers/socket_provider'),
+      environment: ['web'],
+    },
   ],
 
   /*

@@ -6,6 +6,7 @@ import { XIcon } from 'lucide-react'
 import { ReactElement, useEffect } from 'react'
 import { Form, Link } from '@adonisjs/inertia/react'
 import { toaster } from '~/lib/toaster'
+import { socket } from '~/lib/socket'
 
 export default function Layout({ children }: { children: ReactElement<Data.SharedProps> }) {
   const { props } = usePage<Data.SharedProps>()
@@ -16,6 +17,22 @@ export default function Layout({ children }: { children: ReactElement<Data.Share
   // even when flash.error contains the same string as the previous navigation.
   // queueMicrotask avoids the flushSync warning from Ark UI when calling toaster
   // from inside a useEffect.
+  useEffect(() => {
+    if (!socket) return
+    const s = socket
+
+    function onConnect() {
+      console.log('[Socket] Connected:', s.id)
+    }
+
+    s.on('connect', onConnect)
+    if (s.connected) onConnect()
+
+    return () => {
+      s.off('connect', onConnect)
+    }
+  }, [])
+
   useEffect(() => {
     toaster.dismiss()
     if (flash?.error) {
