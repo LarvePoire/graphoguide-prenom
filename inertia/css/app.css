@@ -153,44 +153,118 @@ form {
   flex-direction: column;
   gap: 24px;
 }
-label {
-  margin-bottom: 4px;
-  display: block;
+
+/* Ark UI — Field, PasswordInput, PinInput roots */
+[data-scope='field'][data-part='root'],
+[data-scope='password-input'][data-part='root'],
+[data-scope='pin-input'][data-part='root'] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* Labels */
+[data-part='label'] {
   font-size: 14px;
   font-weight: 500;
+  color: var(--gray-10);
 }
-input,
-textarea,
-button {
-  width: 100%;
-  border-radius: 4px;
-  font: inherit;
-}
-input {
+
+/* Inputs */
+[data-part='input'] {
   height: 40px;
   border: 1px solid var(--gray-4);
+  border-radius: 4px;
   padding: 0 16px;
+  width: 100%;
+  font: inherit;
+  background: transparent;
+  color: var(--gray-10);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
-input[data-invalid='true'],
-textarea[data-invalid='true'] {
+[data-part='input']:focus {
+  border-color: var(--gray-7);
+  box-shadow: 0 0 0 2px var(--gray-3);
+}
+[data-part='input'][data-invalid] {
   border-color: #fb2c36;
 }
-input[data-invalid='true'] + div,
-textarea[data-invalid='true'] + div {
+[data-part='input'][data-invalid]:focus {
+  border-color: #fb2c36;
+  box-shadow: 0 0 0 2px #fb2c361a;
+}
+
+/* Error text */
+[data-part='error-text'] {
   color: #fb2c36;
   font-size: 14px;
   font-weight: 500;
-  margin-top: 2px;
 }
 
-button {
+/* PasswordInput — control wraps input + toggle button */
+[data-scope='password-input'][data-part='control'] {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+[data-scope='password-input'][data-part='input'] {
+  padding-right: 40px;
+}
+[data-scope='password-input'][data-part='visibility-trigger'] {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--gray-6);
+  cursor: pointer;
+}
+[data-scope='password-input'][data-part='visibility-trigger']:hover {
+  color: var(--gray-10);
+}
+[data-scope='password-input'][data-part='visibility-trigger'] svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* PinInput — row of 5 equal boxes */
+[data-scope='pin-input'][data-part='control'] {
+  display: flex;
+  gap: 8px;
+}
+[data-scope='pin-input'][data-part='input'] {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Submit button */
+.button {
+  width: 100%;
+  border-radius: 4px;
+  font: inherit;
   background: var(--gray-12);
   color: #fff;
   border: none;
   padding: 10px;
   font-weight: 500;
+  cursor: pointer;
 }
-button:hover {
+.button:hover {
   background: var(--gray-10);
 }
 
