@@ -1,0 +1,43 @@
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+header {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 30px;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+
+    a {
+      font-weight: 500;
+      color: var(--gray-8);
+
+      &:hover,
+      &.current {
+        color: var(--gray-12);
+      }
+    }
+  }
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+
+main {
+  max-width: 1440px;
+  margin: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 65px);
+  background: #fff;
+  border: 1px solid var(--gray-3);
+}
