@@ -1,25 +1,22 @@
 import { Data } from '@generated/data'
 import { Portal } from '@ark-ui/react/portal'
 import { Toast, Toaster } from '@ark-ui/react/toast'
-import { usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { XIcon } from 'lucide-react'
 import { ReactElement, useEffect } from 'react'
 import { Form, Link } from '@adonisjs/inertia/react'
 import { toaster } from '~/lib/toaster'
 
 export default function Layout({ children }: { children: ReactElement<Data.SharedProps> }) {
-  const url = usePage().url
-  const { flash } = children.props
-
   useEffect(() => {
-    toaster.dismiss()
-  }, [url])
-
-  useEffect(() => {
-    if (flash.error) {
-      toaster.create({ title: flash.error, type: 'error' })
-    }
-  }, [flash.error])
+    return router.on('navigate', (event) => {
+      const props = event.detail.page.props as { flash?: { error?: string } }
+      toaster.dismiss()
+      if (props.flash?.error) {
+        toaster.create({ title: props.flash.error, type: 'error' })
+      }
+    })
+  }, [])
 
   return (
     <>
