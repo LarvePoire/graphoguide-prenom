@@ -1,4 +1,5 @@
 import { Form } from '@adonisjs/inertia/react'
+import { Field } from '@ark-ui/react/field'
 import { usePage } from '@inertiajs/react'
 
 export default function ForgotPassword() {
@@ -17,17 +18,11 @@ export default function ForgotPassword() {
         <Form route="passwordReset.store">
           {({ errors }) => (
             <>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  autoComplete="email"
-                  data-invalid={errors.email ? 'true' : undefined}
-                />
-                {errors.email && <div>{errors.email}</div>}
-              </div>
+              <Field.Root invalid={!!errors.email}>
+                <Field.Label>Email</Field.Label>
+                <Field.Input type="email" name="email" autoComplete="email" />
+                <Field.ErrorText>{errors.email}</Field.ErrorText>
+              </Field.Root>
 
               <div>
                 <button type="submit" className="button">

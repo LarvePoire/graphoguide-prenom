@@ -1,5 +1,8 @@
 import { Form } from '@adonisjs/inertia/react'
+import { Field } from '@ark-ui/react/field'
+import { PasswordInput } from '@ark-ui/react/password-input'
 import { Link } from '@inertiajs/react'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
 export default function Login() {
   return (
@@ -13,28 +16,26 @@ export default function Login() {
         <Form route="session.store">
           {({ errors }) => (
             <>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  autoComplete="username"
-                  data-invalid={errors.email ? 'true' : undefined}
-                />
-                {errors.email && <div>{errors.email}</div>}
-              </div>
+              <Field.Root invalid={!!errors.email}>
+                <Field.Label>Email</Field.Label>
+                <Field.Input type="email" name="email" autoComplete="username" />
+                <Field.ErrorText>{errors.email}</Field.ErrorText>
+              </Field.Root>
 
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-                {errors.password ? <span>{errors.password}</span> : ''}
-              </div>
+              <Field.Root invalid={!!errors.password}>
+                <PasswordInput.Root>
+                  <PasswordInput.Label>Password</PasswordInput.Label>
+                  <PasswordInput.Control>
+                    <PasswordInput.Input name="password" autoComplete="current-password" />
+                    <PasswordInput.VisibilityTrigger>
+                      <PasswordInput.Indicator fallback={<EyeOffIcon />}>
+                        <EyeIcon />
+                      </PasswordInput.Indicator>
+                    </PasswordInput.VisibilityTrigger>
+                  </PasswordInput.Control>
+                </PasswordInput.Root>
+                <Field.ErrorText>{errors.password}</Field.ErrorText>
+              </Field.Root>
 
               <div>
                 <button type="submit" className="button">

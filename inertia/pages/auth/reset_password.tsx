@@ -1,4 +1,7 @@
 import { Form } from '@adonisjs/inertia/react'
+import { Field } from '@ark-ui/react/field'
+import { PasswordInput } from '@ark-ui/react/password-input'
+import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
 export default function ResetPassword({ email }: { email: string }) {
   return (
@@ -14,29 +17,38 @@ export default function ResetPassword({ email }: { email: string }) {
             <>
               <input type="hidden" name="email" value={email} />
 
-              <div>
-                <label htmlFor="password">New password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  autoComplete="new-password"
-                  data-invalid={errors.password ? 'true' : undefined}
-                />
-                {errors.password && <div>{errors.password}</div>}
-              </div>
+              <Field.Root invalid={!!errors.password}>
+                <PasswordInput.Root>
+                  <PasswordInput.Label>New password</PasswordInput.Label>
+                  <PasswordInput.Control>
+                    <PasswordInput.Input name="password" autoComplete="new-password" />
+                    <PasswordInput.VisibilityTrigger>
+                      <PasswordInput.Indicator fallback={<EyeOffIcon />}>
+                        <EyeIcon />
+                      </PasswordInput.Indicator>
+                    </PasswordInput.VisibilityTrigger>
+                  </PasswordInput.Control>
+                </PasswordInput.Root>
+                <Field.ErrorText>{errors.password}</Field.ErrorText>
+              </Field.Root>
 
-              <div>
-                <label htmlFor="passwordConfirmation">Confirm password</label>
-                <input
-                  type="password"
-                  name="passwordConfirmation"
-                  id="passwordConfirmation"
-                  autoComplete="new-password"
-                  data-invalid={errors.passwordConfirmation ? 'true' : undefined}
-                />
-                {errors.passwordConfirmation && <div>{errors.passwordConfirmation}</div>}
-              </div>
+              <Field.Root invalid={!!errors.passwordConfirmation}>
+                <PasswordInput.Root>
+                  <PasswordInput.Label>Confirm password</PasswordInput.Label>
+                  <PasswordInput.Control>
+                    <PasswordInput.Input
+                      name="passwordConfirmation"
+                      autoComplete="new-password"
+                    />
+                    <PasswordInput.VisibilityTrigger>
+                      <PasswordInput.Indicator fallback={<EyeOffIcon />}>
+                        <EyeIcon />
+                      </PasswordInput.Indicator>
+                    </PasswordInput.VisibilityTrigger>
+                  </PasswordInput.Control>
+                </PasswordInput.Root>
+                <Field.ErrorText>{errors.passwordConfirmation}</Field.ErrorText>
+              </Field.Root>
 
               <div>
                 <button type="submit" className="button">

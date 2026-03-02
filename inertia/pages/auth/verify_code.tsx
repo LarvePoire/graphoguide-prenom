@@ -1,4 +1,6 @@
 import { Form } from '@adonisjs/inertia/react'
+import { Field } from '@ark-ui/react/field'
+import { PinInput } from '@ark-ui/react/pin-input'
 import { usePage } from '@inertiajs/react'
 
 export default function VerifyCode({ email }: { email: string }) {
@@ -21,19 +23,18 @@ export default function VerifyCode({ email }: { email: string }) {
             <>
               <input type="hidden" name="email" value={email} />
 
-              <div>
-                <label htmlFor="code">Code</label>
-                <input
-                  type="text"
-                  name="code"
-                  id="code"
-                  inputMode="numeric"
-                  maxLength={5}
-                  autoComplete="one-time-code"
-                  data-invalid={errors.code ? 'true' : undefined}
-                />
-                {errors.code && <div>{errors.code}</div>}
-              </div>
+              <Field.Root invalid={!!errors.code}>
+                <PinInput.Root name="code" count={5} otp type="numeric" invalid={!!errors.code}>
+                  <PinInput.Label>Code</PinInput.Label>
+                  <PinInput.Control>
+                    {[0, 1, 2, 3, 4].map((_, index) => (
+                      <PinInput.Input key={index} index={index} />
+                    ))}
+                  </PinInput.Control>
+                  <PinInput.HiddenInput />
+                </PinInput.Root>
+                <Field.ErrorText>{errors.code}</Field.ErrorText>
+              </Field.Root>
 
               <div>
                 <button type="submit" className="button">
