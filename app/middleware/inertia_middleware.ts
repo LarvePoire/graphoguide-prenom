@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
-import UserTransformer from '#transformers/user_transformer'
 import BaseInertiaMiddleware from '@adonisjs/inertia/inertia_middleware'
 
 export default class InertiaMiddleware extends BaseInertiaMiddleware {
@@ -13,7 +12,7 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
      * In that case, we must always assume that HttpContext is not fully hydrated
      * with all the properties
      */
-    const { session, auth } = ctx as Partial<HttpContext>
+    const { session } = ctx as Partial<HttpContext>
 
     /**
      * Fetching the first error from the flash messages
@@ -32,7 +31,6 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
       flash: ctx.inertia.always({
         error: error,
       }),
-      user: ctx.inertia.always(auth?.user ? UserTransformer.transform(auth.user) : undefined),
     }
   }
 

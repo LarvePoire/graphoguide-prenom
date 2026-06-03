@@ -1,18 +1,12 @@
 // ─── CSS Custom Properties (runtime) ─────────────────────────────────────────
+// Palette de la page « prénom à tracer »
 
 :root {
-  --gray-1: oklch(98.5% 0 0);
-  --gray-2: oklch(97% 0 0);
-  --gray-3: oklch(92.2% 0 0);
-  --gray-4: oklch(87% 0 0);
-  --gray-6: oklch(55.6% 0 0);
-  --gray-7: oklch(43.9% 0 0);
-  --gray-8: oklch(37.1% 0 0);
-  --gray-10: oklch(26.9% 0 0);
-  --gray-12: oklch(14.5% 0 0);
+  --paper: #fffdf7;
+  --ink: #34302a;
+  --sun: #ffcf4a;
+  --sky: #5bb9d6;
+  --coral: #ff7a6b;
+  --leaf: #7bc47f;
+  --shadow: 0 18px 40px -18px rgba(60, 48, 30, 0.45);
 }
-
-// ─── SCSS Variables (compile-time) ───────────────────────────────────────────
-
-$error: #fb2c36;
-$success: #00a63e;

@@ -27,7 +27,6 @@ export default defineConfig({
   */
   commands: [
     () => import('@adonisjs/core/commands'),
-    () => import('@adonisjs/lucid/commands'),
     () => import('@adonisjs/session/commands'),
     () => import('@adonisjs/inertia/commands'),
   ],
@@ -48,23 +47,13 @@ export default defineConfig({
       file: () => import('@adonisjs/core/providers/repl_provider'),
       environment: ['repl', 'test'],
     },
-    () => import('@adonisjs/core/providers/vinejs_provider'),
     () => import('@adonisjs/core/providers/edge_provider'),
     () => import('@adonisjs/session/session_provider'),
     () => import('@adonisjs/vite/vite_provider'),
     () => import('@adonisjs/shield/shield_provider'),
     () => import('@adonisjs/static/static_provider'),
-    () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/inertia/inertia_provider'),
-    () => import('@adonisjs/auth/auth_provider'),
-    () => import('@adonisjs/redis/redis_provider'),
-    () => import('@adonisjs/mail/mail_provider'),
-    () => import('#providers/api_provider'),
-    {
-      file: () => import('#providers/socket_provider'),
-      environment: ['web'],
-    },
   ],
 
   /*
@@ -75,11 +64,7 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [
-    () => import('#start/routes'),
-    () => import('#start/kernel'),
-    () => import('#start/validator'),
-  ],
+  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
 
   /*
   |--------------------------------------------------------------------------
