@@ -13,6 +13,12 @@ Pensé pour les enfants (maternelle / CP) et les parents — une fiche prête à
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white)
 
+<br />
+
+### [🔗 **Voir la démo en ligne**](https://graphoguide.larvepoire.app/)
+
+**[graphoguide.larvepoire.app](https://graphoguide.larvepoire.app/)**
+
 </div>
 
 ---
